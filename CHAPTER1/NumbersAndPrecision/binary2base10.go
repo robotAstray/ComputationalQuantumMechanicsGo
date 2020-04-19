@@ -1,4 +1,5 @@
 //binary2base10.go
+//Usage: go build binary2base10.go; ./binary2base10
 //Copyright (c) 2020 rndMemex
 
 package main
@@ -18,7 +19,7 @@ var version = "0.0"
 
 const exit = "X"
 
-//baseXConverter() convert binary to base-10
+//baseXConverter() converts base-2 to base-10
 func baseXConverter(bin string) (baseX float64) {
 	fmt.Printf("\nConverting %s to base-10..\n\n", bin)
 	if !strings.Contains(bin, ".") {
@@ -62,13 +63,13 @@ func isBin(n string) bool {
 	}
 }
 
-/*isInt() checks if a string is float64*/
+/*isInt() checks if the string is a number*/
 func isFloat64(input string) bool {
 	_, err := strconv.ParseFloat(input, 64)
 	return err == nil
 }
 
-/*enterNumber() reads from standard input*/
+/*enterNumber() reads from standard input and */
 func enterNumber(reader *bufio.Reader) string {
 	var bin string
 	reader = bufio.NewReader(os.Stdin)
@@ -118,3 +119,20 @@ func goodbye() {
 	fmt.Println("\nGoodbye!\n")
 	fmt.Println("Copyright(c) 2020 rndmemex@cantab.net\n")
 }
+
+/*Sample Output
+
+-----------------------
+Command Shell
+-----------------------
+$ Enter a binary # (to exit press X): 10110.1
+
+Converting 10110.1 to base-10..
+
+The Binary number 10110.1 is 22.5 in base-10
+
+Goodbye!
+
+Copyright(c) 2020 rndmemex@cantab.net
+
+*/
