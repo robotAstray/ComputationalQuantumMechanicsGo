@@ -55,7 +55,7 @@ func baseIIConverter(bin string) (baseX float64) {
 
 /*isBinary() checks if input is a binary*/
 func isBin(n string) bool {
-	reDot := regexp.MustCompile(`^[01]+\.?[01]+$`)
+	reDot := regexp.MustCompile(`^[01]+\.?[01]*$`)
 	if reDot.MatchString(n) {
 		return true
 	}
