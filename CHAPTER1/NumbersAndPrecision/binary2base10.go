@@ -20,7 +20,7 @@ var version = "0.0"
 const exit = "X"
 
 //baseXConverter() converts base-2 to base-10
-func baseXConverter(bin string) (baseX float64) {
+func baseIIConverter(bin string) (baseX float64) {
 	fmt.Printf("\nConverting %s to base-10..\n\n", bin)
 	if !strings.Contains(bin, ".") {
 		var s float64
@@ -109,7 +109,7 @@ func enterNumber(reader *bufio.Reader) string {
 func main() {
 	var inputNum *bufio.Reader
 	bin := enterNumber(inputNum)
-	baseX := baseXConverter(bin)
+	baseX := baseIIConverter(bin)
 	fmt.Printf("The Binary number %s is %#v in base-10\n", bin, baseX)
 	goodbye()
 
