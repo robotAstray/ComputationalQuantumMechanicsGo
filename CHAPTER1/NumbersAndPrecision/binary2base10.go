@@ -58,9 +58,8 @@ func isBin(n string) bool {
 	reDot := regexp.MustCompile(`^[01]+\.?[01]+$`)
 	if reDot.MatchString(n) {
 		return true
-	} else {
-		return false
 	}
+	return false
 }
 
 /*isInt() checks if the string is a number*/
