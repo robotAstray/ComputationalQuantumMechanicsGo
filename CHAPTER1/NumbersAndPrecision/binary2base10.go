@@ -35,16 +35,16 @@ func baseIIConverter(bin string) (baseX float64) {
 		index := strings.Index(bin, ".")
 		var s float64    //sum
 		var dSum float64 //decimal points values sum
-		binBeforeDecimalPoint := bin[:index]
-		binAfterDecimalPoint := bin[index+1:]
+		integerBits := bin[:index]
+		fractionalBits := bin[index+1:]
 		for k := len(bin[:index]) - 1; k >= 0; k-- {
 			i := len(bin[:index]) - 1
-			nDigit, _ := strconv.ParseFloat(string(binBeforeDecimalPoint[i-k]), 64)
+			nDigit, _ := strconv.ParseFloat(string(integerBits[i-k]), 64)
 			e := float64(k)
 			s = s + nDigit*math.Pow(2, e)
 		}
 		for i := 0; i < len(bin[index+1:]); i++ {
-			d, _ := strconv.ParseFloat(string(binAfterDecimalPoint[i]), 64)
+			d, _ := strconv.ParseFloat(string(fractionalBits[i]), 64)
 			e := -float64((i + 1))
 			dSum = dSum + d*math.Pow(2, e)
 		}
