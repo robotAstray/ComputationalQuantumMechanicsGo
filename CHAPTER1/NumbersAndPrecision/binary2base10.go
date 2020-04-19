@@ -1,4 +1,4 @@
-//binary2base10.go
+//binary2base10.go - base-2 to base-10 calculator
 //Usage: go build binary2base10.go; ./binary2base10
 //Copyright (c) 2020 rndMemex
 
@@ -120,7 +120,7 @@ func goodbye() {
 	fmt.Println("Copyright(c) 2020 rndmemex@cantab.net\n")
 }
 
-/*Sample Output
+/*Sample Output of base-2 to base-10 calculator
 
 -----------------------
 Command Shell
