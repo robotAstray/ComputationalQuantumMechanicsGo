@@ -28,7 +28,7 @@ func baseIIConverter(bin string) (baseX float64) {
 			i := len(bin) - 1
 			n, _ := strconv.ParseFloat(string(bin[i-k]), 64)
 			e := float64(k)
-			s = s + n*math.Pow(2, e)
+			s += n * math.Pow(2, e)
 		}
 		baseX = s
 	} else {
@@ -41,12 +41,12 @@ func baseIIConverter(bin string) (baseX float64) {
 			i := len(bin[:index]) - 1
 			nDigit, _ := strconv.ParseFloat(string(integerBits[i-k]), 64)
 			e := float64(k)
-			s = s + nDigit*math.Pow(2, e)
+			s += nDigit * math.Pow(2, e)
 		}
 		for i := 0; i < len(bin[index+1:]); i++ {
 			d, _ := strconv.ParseFloat(string(fractionalBits[i]), 64)
 			e := -float64((i + 1))
-			dSum = dSum + d*math.Pow(2, e)
+			dSum += d * math.Pow(2, e)
 		}
 		baseX = s + dSum
 	}
@@ -72,9 +72,9 @@ func isFloat64(input string) bool {
 func enterNumber(reader *bufio.Reader) string {
 	var bin string
 	reader = bufio.NewReader(os.Stdin)
-	fmt.Println("-----------------------")
-	fmt.Println("Command Shell")
-	fmt.Println("-----------------------")
+	// fmt.Println("-----------------------")
+	// fmt.Println("Command Shell")
+	// fmt.Println("-----------------------")
 	for {
 		fmt.Print("$ Enter a binary # (to exit press X): ")
 		n, err := reader.ReadString('\n')
@@ -89,14 +89,14 @@ func enterNumber(reader *bufio.Reader) string {
 				goodbye()
 				os.Exit(0)
 			} else {
-				fmt.Printf("ERROR!! %s is not a number!\n", n)
+				fmt.Printf("ERROR!! %s is not a number!\n\n", n)
 				continue
 			}
 		} else {
 			if isBin((n)) {
 				bin = n
 			} else {
-				fmt.Printf("%s is not a binary number\n", n)
+				fmt.Printf("\n%s is not a binary number\n\n", n)
 				continue
 			}
 			return bin
@@ -107,10 +107,16 @@ func enterNumber(reader *bufio.Reader) string {
 
 func main() {
 	var inputNum *bufio.Reader
-	bin := enterNumber(inputNum)
-	baseX := baseIIConverter(bin)
-	fmt.Printf("The Binary number %s is %#v in base-10\n", bin, baseX)
-	goodbye()
+	fmt.Println("-----------------------")
+	fmt.Println("Command Shell")
+	fmt.Println("-----------------------")
+	for {
+		bin := enterNumber(inputNum)
+		baseX := baseIIConverter(bin)
+		fmt.Printf("The Binary number %s is %#v in base-10\n\n", bin, baseX)
+	}
+	// fmt.Printf("The Binary number %s is %#v in base-10\n", bin, baseX)
+	// goodbye()
 
 }
 
