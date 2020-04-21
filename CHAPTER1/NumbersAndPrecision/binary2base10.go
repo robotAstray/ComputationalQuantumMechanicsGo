@@ -34,7 +34,7 @@ func baseIIConverter(bin string) (baseX float64) {
 	} else {
 		index := strings.Index(bin, ".")
 		var s float64    //sum
-		var dSum float64 //decimal points values sum
+		var dSum float64 //decimal point values sum
 		integerBits := bin[:index]
 		fractionalBits := bin[index+1:]
 		for k := len(bin[:index]) - 1; k >= 0; k-- {
