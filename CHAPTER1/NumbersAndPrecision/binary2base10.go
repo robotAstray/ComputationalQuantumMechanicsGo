@@ -62,7 +62,7 @@ func isBin(n string) bool {
 	return false
 }
 
-/*isInt() checks if the string is a number*/
+/*iFloat64() checks if the string is a number*/
 func isFloat64(input string) bool {
 	_, err := strconv.ParseFloat(input, 64)
 	return err == nil
