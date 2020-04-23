@@ -98,6 +98,7 @@ func main() {
 		bin := binaryCalculator(baseX)
 		fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
 	}
+
 }
 
 func goodbye() {
@@ -126,4 +127,13 @@ Operation 4: 2/2=1 with remainder 0
 
 Operation 5: 1/2=0 with remainder 1
 
-The binary representation of 23 base-10 is 10111 */
+The binary representation of 23 base-10 is 10111
+-----------------------
+Command Shell
+-----------------------
+$ enter a number (to exit press X): x
+
+Goodbye!
+
+Copyright(c) 2020 rndmemex@cantab.net
+*/
