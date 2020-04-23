@@ -104,3 +104,26 @@ func goodbye() {
 	fmt.Println("\nGoodbye!\n")
 	fmt.Println("Copyright(c) 2020 rndmemex@cantab.net\n")
 }
+
+/* Sample Output:
+
+-----------------------
+Command Shell
+-----------------------
+$ enter a number (to exit press X): 23
+
+Converting 23 base-10 to binary representation..
+
+Upper bound on No. of operations required ~ 2*ln(10)/ln(2) = 6
+
+Operation 1: 23/2=11 with remainder 1
+
+Operation 2: 11/2=5 with remainder 1
+
+Operation 3: 5/2=2 with remainder 1
+
+Operation 4: 2/2=1 with remainder 0
+
+Operation 5: 1/2=0 with remainder 1
+
+The binary representation of 23 base-10 is 10111 */
