@@ -19,7 +19,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 	fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
 	ratio := int(math.Log10(10) / math.Log10(2))
 	reps := len(baseXNum) * ratio
-	fmt.Printf("No. of operations required ~ %d*ln(10)/ln(2) = %d\n\n", len(baseXNum), reps)
+	fmt.Printf("Upper bound on No. of operations required ~ %d*ln(10)/ln(2) = %d\n\n", len(baseXNum), reps)
 	if !strings.Contains(baseXNum, ".") {
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
