@@ -7,13 +7,48 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
+	"math"
+	"os"
+	"regexp"
+	"strconv"
+	"strings"
 )
 
 func binaryCalculator(baseXNum string) (bin float64) {
-	fmt.Printf("\nConverting %s to binary representation..\n\n", baseXNum)
-	if !strings.Contains(bin, ".") {
-	} else {
+	fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
+	ratio := int(math.Log10(10) / math.Log10(2))
+	reps := len(baseXNum) * ratio
+	fmt.Printf("No. of operations required ~ %d*ln(10)/ln(2) = %d\n\n", len(baseXNum), reps)
+	if !strings.Contains(baseXNum, ".") {
+		var s []string
+		n, _ := strconv.Atoi(baseXNum)
+		for i := 0; i < reps; i++ {
+			numerator := n
+			if n == 0 {
+				break
+			}
+			remainder := n % 2
+			integerBit := strconv.Itoa(remainder)
+			n = n / 2
+			fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
+			s = append(s, integerBit)
 
+		}
+		//fmt.Printf("remainder slice %v\n", s)
+		var reverseStr []string
+		//reverse order in s slice
+		for j := range s {
+			integerBitStr := s[len(s)-1-j]
+			reverseStr = append(reverseStr, integerBitStr)
+		}
+		//fmt.Printf("Integers Bit %v", reverseStr)
+		var binStr string
+		binStr = strings.Join(reverseStr, "")
+		bin, _ := strconv.ParseFloat(binStr, 64)
+		return bin
+	} else {
+		log.Println("floating number")
 	}
 	return bin
 }
@@ -30,7 +65,7 @@ func enterNumber(reader *bufio.Reader) string {
 			continue
 		}
 		n = strings.TrimSuffix(n, "\n")
-		if !isFloat(n) {
+		if !isFloat64(n) {
 			exit := regexp.MustCompile(`(?i)^[X]+$`)
 			if exit.MatchString(n) {
 				goodbye()
@@ -61,7 +96,7 @@ func main() {
 	for {
 		baseX := enterNumber(inputNum)
 		bin := binaryCalculator(baseX)
-		fmt.Printf("The %s base-10 is %#v base-2 \n\n", baseX, bin)
+		fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
 	}
 }
 
