@@ -97,8 +97,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 				fractionalPart = m
 			}
 		}
-		fractionalBinStr := strings.Join(fractSlice, "")
-		fractionalBinStr = "0." + fractionalBinStr
+		fractionalBinStr := "0." + strings.Join(fractSlice, "")
 		fmt.Printf("Fractional Bin: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
