@@ -20,7 +20,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 	ratio := int(math.Log10(10) / math.Log10(2))
 
 	if !strings.Contains(baseXNum, ".") {
-		reps := len(baseXNum) * ratio //upper bound on operation needed
+		reps := len(baseXNum) * ratio //upper bound on operations needed
 		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
@@ -51,7 +51,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		integerNum := baseXNum[:index]
 		var s []string
 		n, _ := strconv.Atoi(integerNum)
-		integerReps := len(integerNum) * ratio //upper bound on operation needed
+		integerReps := len(integerNum) * ratio //upper bound on operations needed
 		fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
 		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
 		for i := 0; i < integerReps; i++ {
@@ -134,7 +134,7 @@ func enterNumber(reader *bufio.Reader) string {
 	return baseXNum
 }
 
-/*iFloat64() checks if the string is a number*/
+/*isFloat64() checks if the string is a number*/
 func isFloat64(input string) bool {
 	_, err := strconv.ParseFloat(input, 64)
 	return err == nil
