@@ -75,7 +75,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var binIntStr string
 		binIntStr = strings.Join(reverseIntStr, "")
 		intBin, _ := strconv.ParseFloat(binIntStr, 64)
-		fmt.Printf("Integer Bin: %v\n\n", intBin)
+		fmt.Printf("Integer Bits: %v\n\n", intBin)
 
 		//"Converting factional part...\n\n"
 		fractionalNum := baseXNum[index+1:]
@@ -98,7 +98,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 			}
 		}
 		fractionalBinStr := "0." + strings.Join(fractSlice, "")
-		fmt.Printf("Fractional Bin: %s\n\n", fractionalBinStr)
+		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
 	}
