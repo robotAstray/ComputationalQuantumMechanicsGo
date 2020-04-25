@@ -21,7 +21,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 
 	if !strings.Contains(baseXNum, ".") {
 		reps := len(baseXNum) * ratio //upper bound on operation needed
-		fmt.Printf("Upper bound on No. of operations required ~ %d*ln(10)/ln(2) = %d\n\n", len(baseXNum), reps)
+		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
 		for i := 0; i < reps; i++ {
@@ -53,7 +53,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		n, _ := strconv.Atoi(integerNum)
 		integerReps := len(integerNum) * ratio //upper bound on operation needed
 		fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
-		fmt.Printf("Upper bound on No. of operations required ~ %d*ln(10)/ln(2) = %d\n\n", len(integerNum), integerReps)
+		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
 		for i := 0; i < integerReps; i++ {
 			numerator := n
 			if n == 0 {
