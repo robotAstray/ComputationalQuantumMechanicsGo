@@ -1,7 +1,6 @@
-//binarycalculator.go - base-10 to base-2 calculator
-//Usage: go build binarycalculator.go; ./binarycalculator
+//fixedpointRep2baseX.go - base-10 to base-2 calculator
+//Usage: go build fixedpointRep2baseX.go; ./fixedpointRep2baseX
 //Copyright (c) 2020 rndMemex
-
 package main
 
 import (
@@ -15,24 +14,95 @@ import (
 	"strings"
 )
 
+func XVIfixedPointRep(bin float64) string {
+	binStr := fmt.Sprintf("%f", bin)
+//	fmt.Printf("binStr %s\n", binStr)
+	var XVIPointRepStr string
+	N := 16 //Total Number of bits
+	I := 4  //number of integer bits
+	if !strings.Contains(binStr, ".") {
+		if len(binStr) < I {
+			zeros := I - len(binStr)
+			fmt.Printf("I - len(%v) = %d", bin, zeros)
+			for i := 0; i < zeros; i++ {
+				binStr = "0" + binStr
+				fmt.Printf("Adding zeros: %s", binStr)
+			}
+			fractionalZeros := N - I
+			binStr = binStr + "."
+			fmt.Printf("Adding a decimal point: %s", binStr)
+			for k := 0; k < fractionalZeros; k++ {
+				binStr = binStr + "0"
+			}
+		    fmt.Printf("16-bit fixed Point Rep: %s", binStr)
+			// XVIPointRep, _ = strconv.ParseFloat(binStr, 64)
+			XVIPointRepStr = binStr
+			return XVIPointRepStr
+
+		} else if len(binStr) == I {
+			fractionalZeros := N - I
+			
+			XVIPointRepStr = binStr + "."
+			for i := 0; i < fractionalZeros; i++ {
+				XVIPointRepStr = XVIPointRepStr + "0"
+			}
+
+			return XVIPointRepStr
+		}
+      return XVIPointRepStr
+	} else {
+		index := strings.Index(binStr, ".")
+		integerBits := binStr[:index]
+		//fmt.Printf("integerBits %s\n", integerBits)
+		fractionalBits := binStr[index +1:]
+		//fmt.Printf("fractionalBits %s\n", fractionalBits)
+		if len(integerBits) < I {
+			zeros := I - len(integerBits)
+			for i := 0; i < zeros; i++ {
+				binStr = "0" + binStr
+			}
+			fractionalZeros := N - I - len(fractionalBits)
+			for k := 0; k < fractionalZeros; k++ {
+				binStr = binStr + "0"
+			}
+		
+			XVIPointRepStr = binStr
+			
+	    } else if len(integerBits) == I{
+			fractionalZeros := N - I - len(fractionalBits)
+			for k := 0; k < fractionalZeros; k++ {
+				binStr = binStr + "0"
+			}
+			XVIPointRepStr = binStr
+
+	} else{
+		fmt.Printf("Truncation error or Round-off error\n")
+		goodbye()
+		os.Exit(0)
+	}
+	return XVIPointRepStr
+}
+return XVIPointRepStr
+}
+
 func binaryCalculator(baseXNum string) (bin float64) {
-	fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
+	//fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
 	ratio := int(math.Log10(10) / math.Log10(2))
 
 	if !strings.Contains(baseXNum, ".") {
 		reps := len(baseXNum) * ratio //upper bound on operations needed
-		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
+	//	fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
-		for i := 0; i < reps +1; i++ {
-			numerator := n
+		for i := 0; i < reps+1; i++ {
+	//	numerator := n
 			if n == 0 {
 				break
 			}
 			remainder := n % 2
 			integerBit := strconv.Itoa(remainder)
 			n = n / 2
-			fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
+	//	 fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
 			s = append(s, integerBit)
 
 		}
@@ -52,17 +122,17 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var s []string
 		n, _ := strconv.Atoi(integerNum)
 		integerReps := len(integerNum) * ratio //upper bound on operations needed
-		fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
-		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
-		for i := 0; i < integerReps +1; i++ {
-			numerator := n
+	//	fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
+	//	fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
+		for i := 0; i < integerReps; i++ {
+		//	numerator := n
 			if n == 0 {
 				break
 			}
 			remainder := n % 2
 			integerBit := strconv.Itoa(remainder)
 			n = n / 2
-			fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
+	//		fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
 			s = append(s, integerBit)
 
 		}
@@ -75,19 +145,19 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var binIntStr string
 		binIntStr = strings.Join(reverseIntStr, "")
 		intBin, _ := strconv.ParseFloat(binIntStr, 64)
-		fmt.Printf("Integer Bits: %v\n\n", intBin)
+	//	fmt.Printf("Integer Bits: %v\n\n", intBin)
 
 		//"Converting factional part...\n\n"
 		fractionalNum := baseXNum[index+1:]
 		inputF64, _ := strconv.ParseFloat(baseXNum, 64)
 		integerNumF64, _ := strconv.ParseFloat(integerNum, 64)
 		fractionalPart := inputF64 - integerNumF64
-		fmt.Printf("STEP 2: Converting factional part: %v\n\n", fractionalPart)
+	//	fmt.Printf("STEP 2: Converting factional part: %v\n\n", fractionalPart)
 		var fractSlice []string
 		var m float64
 		for k := 0; k < len(fractionalNum); k++ {
 			m = fractionalPart * 2
-			fmt.Printf("%v * 2 = %v \n\n", fractionalPart, m)
+	//		fmt.Printf("%v * 2 = %v \n\n", fractionalPart, m)
 			if strings.HasPrefix(fmt.Sprintf("%f", fractionalPart*2), "1") {
 				fractSlice = append(fractSlice, "1")
 				fractionalPart = m - 1
@@ -98,7 +168,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 			}
 		}
 		fractionalBinStr := "0." + strings.Join(fractSlice, "")
-		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
+//		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
 	}
@@ -149,6 +219,9 @@ func main() {
 		baseX := enterNumber(inputNum)
 		bin := binaryCalculator(baseX)
 		fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
+		fmt.Printf("Converting to 16-bit fixed point representation...\n\n")
+		XVIFixPointRep := XVIfixedPointRep(bin)
+		fmt.Printf("The 16-bit fixed-point representation of %v is %#v\n\n", bin, XVIFixPointRep)
 	}
 
 }
@@ -157,79 +230,3 @@ func goodbye() {
 	fmt.Printf("\nGoodbye!\n")
 	fmt.Printf("Copyright(c) 2020 rndmemex@cantab.net\n")
 }
-
-/* Sample Output for input = 23
-
------------------------
-Command Shell
------------------------
-$ enter a number (to exit press X): 23
-
-Converting 23 base-10 to binary representation..
-
-Upper bound on No. of operations required ~ 2*ln(10)/ln(2) = 6
-
-Operation 1: 23/2=11 with remainder 1
-
-Operation 2: 11/2=5 with remainder 1
-
-Operation 3: 5/2=2 with remainder 1
-
-Operation 4: 2/2=1 with remainder 0
-
-Operation 5: 1/2=0 with remainder 1
-
-The binary representation of 23 base-10 is 10111
------------------------
-Command Shell
------------------------
-$ enter a number (to exit press X): x
-
-Goodbye!
-
-Copyright(c) 2020 rndmemex@cantab.net
-*/
-
-/* Sample Output for input = 23.625
------------------------
-Command Shell
------------------------
-$ enter a number (to exit press X): 23.625
-
-Converting 23.625 base-10 to binary representation..
-
-STEP 1: Converting integer part: 23
-
-Upper bound on No. of operations required ~ 2*ln(10)/ln(2) = 6
-
-Operation 1: 23/2=11 with remainder 1
-
-Operation 2: 11/2=5 with remainder 1
-
-Operation 3: 5/2=2 with remainder 1
-
-Operation 4: 2/2=1 with remainder 0
-
-Operation 5: 1/2=0 with remainder 1
-
-Integer Bin: 10111
-
-STEP 2: Converting factional part: 0.625
-
-0.625 * 2 = 1.25
-
-0.25 * 2 = 0.5
-
-0.5 * 2 = 1
-
-Fractional Bin: 0.101
-
-The binary representation of 23.625 base-10 is 10111.101
-
-$ enter a number (to exit press X): X
-
-Goodbye!
-Copyright(c) 2020 rndmemex@cantab.net
-
-
-*/
