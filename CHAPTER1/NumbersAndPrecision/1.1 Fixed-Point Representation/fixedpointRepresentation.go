@@ -187,6 +187,12 @@ func enterNumber(reader *bufio.Reader) string {
 			continue
 		}
 		n = strings.TrimSuffix(n, "\n")
+		whitespaceExists := strings.HasSuffix(n , "")
+		//this is necessary since a byte[0xd] may be added to the input. 
+		//New lines behave differently across platforms 
+		if whitespaceExists{
+			n = strings.TrimSpace(n)
+		}
 		if !isFloat64(n) {
 			exit := regexp.MustCompile(`(?i)^[X]+$`)
 			if exit.MatchString(n) {

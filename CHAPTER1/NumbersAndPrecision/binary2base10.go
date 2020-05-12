@@ -56,6 +56,9 @@ func baseIIConverter(bin string) (baseX float64) {
 /*isBinary() checks if input is a binary*/
 func isBin(n string) bool {
 	reDot := regexp.MustCompile(`^[01]+\.?[01]*$`)
+
+	log.Printf("Regular expression for isBin(): %s\n\n", reDot)
+	log.Printf("input: %s and regex.MatchString(n): %v", n, reDot.MatchString(n))
 	if reDot.MatchString(n) {
 		return true
 	}
@@ -78,13 +81,23 @@ func enterNumber(reader *bufio.Reader) string {
 	for {
 		fmt.Print("$ Enter a binary # (to exit press X): ")
 		n, err := reader.ReadString('\n')
+		//log.Printf("Debug n: %s\n\n", n)
 		if err != nil {
 			log.Print(err)
 			continue
 		}
 		n = strings.TrimSuffix(n, "\n")
+		log.Printf("Debug n : %s, after TrimSuffix(n)\n\n", n)
+		whitespaceExists := strings.HasSuffix(n , "")
+
+		//this is necessary since a byte[0xd] may be added to the input. 
+		//New lines behave differently across platforms 
+		if whitespaceExists{
+			n = strings.TrimSpace(n)
+		}
 		if !isFloat64(n) {
 			exit := regexp.MustCompile(`(?i)^[X]+$`)
+			log.Printf("Regular expression to quit: %s", exit)
 			if exit.MatchString(n) {
 				goodbye()
 				os.Exit(0)
