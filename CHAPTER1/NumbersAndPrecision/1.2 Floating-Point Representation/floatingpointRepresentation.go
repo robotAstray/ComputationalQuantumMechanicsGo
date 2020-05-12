@@ -4,8 +4,22 @@
 
 package main
 
-import ()
-func floatingPointFixRep(bin float64) string{}
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"math"
+	"os"
+	"regexp"
+	"strconv"
+	"strings"
+)
+
+func floatingPointFixRep(bin float64) string {
+	binStr, _ := strconv.ParseFloat(bin, 64)
+	index := strings.Index(baseXNum, ".")
+	intBin
+}
 
 func binaryCalculator(baseXNum string) (bin float64) {
 	//fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
@@ -13,18 +27,18 @@ func binaryCalculator(baseXNum string) (bin float64) {
 
 	if !strings.Contains(baseXNum, ".") {
 		reps := len(baseXNum) * ratio //upper bound on operations needed
-	//	fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
+		//	fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
 		for i := 0; i < reps+1; i++ {
-	//	numerator := n
+			//	numerator := n
 			if n == 0 {
 				break
 			}
 			remainder := n % 2
 			integerBit := strconv.Itoa(remainder)
 			n = n / 2
-	//	 fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
+			//	 fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
 			s = append(s, integerBit)
 
 		}
@@ -44,17 +58,17 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var s []string
 		n, _ := strconv.Atoi(integerNum)
 		integerReps := len(integerNum) * ratio //upper bound on operations needed
-	//	fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
-	//	fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
+		//	fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
+		//	fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
 		for i := 0; i < integerReps; i++ {
-		//	numerator := n
+			//	numerator := n
 			if n == 0 {
 				break
 			}
 			remainder := n % 2
 			integerBit := strconv.Itoa(remainder)
 			n = n / 2
-	//		fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
+			//		fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
 			s = append(s, integerBit)
 
 		}
@@ -67,19 +81,19 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var binIntStr string
 		binIntStr = strings.Join(reverseIntStr, "")
 		intBin, _ := strconv.ParseFloat(binIntStr, 64)
-	//	fmt.Printf("Integer Bits: %v\n\n", intBin)
+		//	fmt.Printf("Integer Bits: %v\n\n", intBin)
 
 		//"Converting factional part...\n\n"
 		fractionalNum := baseXNum[index+1:]
 		inputF64, _ := strconv.ParseFloat(baseXNum, 64)
 		integerNumF64, _ := strconv.ParseFloat(integerNum, 64)
 		fractionalPart := inputF64 - integerNumF64
-	//	fmt.Printf("STEP 2: Converting factional part: %v\n\n", fractionalPart)
+		//	fmt.Printf("STEP 2: Converting factional part: %v\n\n", fractionalPart)
 		var fractSlice []string
 		var m float64
 		for k := 0; k < len(fractionalNum); k++ {
 			m = fractionalPart * 2
-	//		fmt.Printf("%v * 2 = %v \n\n", fractionalPart, m)
+			//		fmt.Printf("%v * 2 = %v \n\n", fractionalPart, m)
 			if strings.HasPrefix(fmt.Sprintf("%f", fractionalPart*2), "1") {
 				fractSlice = append(fractSlice, "1")
 				fractionalPart = m - 1
@@ -90,7 +104,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 			}
 		}
 		fractionalBinStr := "0." + strings.Join(fractSlice, "")
-//		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
+		//		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
 	}
@@ -138,7 +152,7 @@ func isFloat64(input string) bool {
 	return err == nil
 }
 func isFloat64Negative(input string) bool {
-	if strings.HasPrefix(input, "-"){
+	if strings.HasPrefix(input, "-") {
 		return true
 	}
 	return false
