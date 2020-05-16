@@ -183,7 +183,7 @@ func main() {
 		baseX := enterNumber(inputNum)
 		bin := binaryCalculator(baseX)
 		fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
-		fmt.Printf("Converting to 16-bit fixed point representation...\n\n")
+		fmt.Printf("Converting to floating point representation...\n\n")
 		//always using 8 significant figures
 		VIIIFloatingPointRep := floatingPointRep(bin)
 		fmt.Printf("The 16-bit fixed-point representation of %v is %#v\n\n", bin, VIIIFloatingPointRep)
