@@ -195,3 +195,39 @@ func goodbye() {
 	fmt.Printf("\nGoodbye!\n")
 	fmt.Printf("Copyright(c) 2020 rndmemex@cantab.net\n")
 }
+
+/*
+Sample output:
+
+-----------------------
+Command Shell
+-----------------------
+$ Enter a number (to exit press X): 9.2
+
+Converting 9.2 base-10 to binary representation..
+
+STEP 1: Converting integer part: 9
+
+Upper bound on No. of operations required ~ 1*log(10)/log(2) = 3
+
+Operation 1: 9/2=4 with remainder 1
+
+Operation 2: 4/2=2 with remainder 0
+
+Operation 3: 2/2=1 with remainder 0
+
+Operation 4: 1/2=0 with remainder 1
+
+Integer Bits: 1001
+
+STEP 2: Converting fractional part: 0.1999999999999993
+
+0.1999999999999993 * 2 = 0.3999999999999986
+
+Fractional Bits: 0.0
+
+The binary representation of 9.2 base-10 is 1001
+
+Converting to floating point representation...
+
+The floating-point representation of 1001 is "1.001000000x 2^(3)"*/
