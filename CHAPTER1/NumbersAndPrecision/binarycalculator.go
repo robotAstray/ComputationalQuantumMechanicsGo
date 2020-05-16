@@ -24,7 +24,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
-		for i := 0; i < reps +1; i++ {
+		for i := 0; i < reps+1; i++ {
 			numerator := n
 			if n == 0 {
 				break
@@ -54,7 +54,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		integerReps := len(integerNum) * ratio //upper bound on operations needed
 		fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
 		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
-		for i := 0; i < integerReps +1; i++ {
+		for i := 0; i < integerReps+1; i++ {
 			numerator := n
 			if n == 0 {
 				break
@@ -77,12 +77,12 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		intBin, _ := strconv.ParseFloat(binIntStr, 64)
 		fmt.Printf("Integer Bits: %v\n\n", intBin)
 
-		//"Converting factional part...\n\n"
+		//"Converting fractional part...\n\n"
 		fractionalNum := baseXNum[index+1:]
 		inputF64, _ := strconv.ParseFloat(baseXNum, 64)
 		integerNumF64, _ := strconv.ParseFloat(integerNum, 64)
 		fractionalPart := inputF64 - integerNumF64
-		fmt.Printf("STEP 2: Converting factional part: %v\n\n", fractionalPart)
+		fmt.Printf("STEP 2: Converting fractional part: %v\n\n", fractionalPart)
 		var fractSlice []string
 		var m float64
 		for k := 0; k < len(fractionalNum); k++ {
@@ -117,10 +117,10 @@ func enterNumber(reader *bufio.Reader) string {
 			continue
 		}
 		n = strings.TrimSuffix(n, "\n")
-		whitespaceExists := strings.HasSuffix(n , "")
-		//this is necessary since a byte[0xd] may be added to the input. 
-		//New lines behave differently across platforms 
-		if whitespaceExists{
+		whitespaceExists := strings.HasSuffix(n, "")
+		//this is necessary since a byte[0xd] may be added to the input.
+		//New lines behave differently across platforms
+		if whitespaceExists {
 			n = strings.TrimSpace(n)
 		}
 		if !isFloat64(n) {
@@ -159,7 +159,7 @@ func main() {
 
 }
 
-func goodbye(){
+func goodbye() {
 	fmt.Printf("\nGoodbye!\n")
 	fmt.Printf("Copyright(c) 2020 rndmemex@cantab.net\n")
 }
@@ -220,7 +220,7 @@ Operation 5: 1/2=0 with remainder 1
 
 Integer Bin: 10111
 
-STEP 2: Converting factional part: 0.625
+STEP 2: Converting fractional part: 0.625
 
 0.625 * 2 = 1.25
 
