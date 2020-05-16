@@ -19,6 +19,8 @@ var version = "0.0"
 
 const exit = "X"
 
+var sign string
+
 //baseXConverter() converts base-2 to base-10
 func baseIIConverter(bin string) (baseX float64) {
 	fmt.Printf("\nConverting %s to base-10..\n\n", bin)
@@ -31,6 +33,10 @@ func baseIIConverter(bin string) (baseX float64) {
 			s += n * math.Pow(2, e)
 		}
 		baseX = s
+		if sign == "negative" {
+			baseX = -baseX
+			// fmt.Printf("sign: %s and bin: %v", sign, bin)
+		}
 	} else {
 		index := strings.Index(bin, ".")
 		var s float64    //sum
@@ -49,6 +55,10 @@ func baseIIConverter(bin string) (baseX float64) {
 			dSum += d * math.Pow(2, e)
 		}
 		baseX = s + dSum
+		if sign == "negative" {
+			baseX = -baseX
+			// fmt.Printf("sign: %s and bin: %v", sign, bin)
+		}
 	}
 	return baseX
 }
@@ -56,9 +66,11 @@ func baseIIConverter(bin string) (baseX float64) {
 /*isBinary() checks if input is a binary*/
 func isBin(n string) bool {
 	reDot := regexp.MustCompile(`^[01]+\.?[01]*$`)
-
-	log.Printf("Regular expression for isBin(): %s\n\n", reDot)
-	log.Printf("input: %s and regex.MatchString(n): %v", n, reDot.MatchString(n))
+	if sign == "negative" {
+		n = n[1:]
+	}
+	// log.Printf("Regular expression for isBin(): %s\n\n", reDot)
+	// log.Printf("input: %s and regex.MatchString(n): %v", n, reDot.MatchString(n))
 	if reDot.MatchString(n) {
 		return true
 	}
@@ -68,6 +80,12 @@ func isBin(n string) bool {
 /*iFloat64() checks if the string is a number*/
 func isFloat64(input string) bool {
 	_, err := strconv.ParseFloat(input, 64)
+	if strings.HasPrefix(input, "-") {
+		sign = "negative"
+	} else {
+		sign = "positive"
+	}
+	log.Printf("Sign: %s", sign)
 	return err == nil
 }
 
@@ -87,17 +105,17 @@ func enterNumber(reader *bufio.Reader) string {
 			continue
 		}
 		n = strings.TrimSuffix(n, "\n")
-		log.Printf("Debug n : %s, after TrimSuffix(n)\n\n", n)
-		whitespaceExists := strings.HasSuffix(n , "")
+		//	log.Printf("Debug n : %s, after TrimSuffix(n)\n\n", n)
+		whitespaceExists := strings.HasSuffix(n, "")
 
-		//this is necessary since a byte[0xd] may be added to the input. 
-		//New lines behave differently across platforms 
-		if whitespaceExists{
+		//this is necessary since a byte[0xd] may be added to the input.
+		//New lines behave differently across platforms
+		if whitespaceExists {
 			n = strings.TrimSpace(n)
 		}
 		if !isFloat64(n) {
 			exit := regexp.MustCompile(`(?i)^[X]+$`)
-			log.Printf("Regular expression to quit: %s", exit)
+			//		log.Printf("Regular expression to quit: %s", exit)
 			if exit.MatchString(n) {
 				goodbye()
 				os.Exit(0)
@@ -107,6 +125,7 @@ func enterNumber(reader *bufio.Reader) string {
 			}
 		} else {
 			if isBin((n)) {
+
 				bin = n
 			} else {
 				fmt.Printf("\n%s is not a binary number\n\n", n)

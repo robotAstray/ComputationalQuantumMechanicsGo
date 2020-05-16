@@ -148,10 +148,9 @@ func enterNumber(reader *bufio.Reader) string {
 				continue
 			}
 		} else {
+			baseXNum = n
 			if sign == "negative" {
 				baseXNum = n[1:]
-			} else {
-				baseXNum = n
 			}
 		}
 		return baseXNum
