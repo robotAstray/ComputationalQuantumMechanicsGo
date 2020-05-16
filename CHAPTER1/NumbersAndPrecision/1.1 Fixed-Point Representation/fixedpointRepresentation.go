@@ -16,7 +16,7 @@ import (
 
 func XVIfixedPointRep(bin float64) string {
 	binStr := fmt.Sprintf("%f", bin)
-//	fmt.Printf("binStr %s\n", binStr)
+	//	fmt.Printf("binStr %s\n", binStr)
 	var XVIPointRepStr string
 	N := 16 //Total Number of bits
 	I := 4  //number of integer bits
@@ -34,14 +34,14 @@ func XVIfixedPointRep(bin float64) string {
 			for k := 0; k < fractionalZeros; k++ {
 				binStr = binStr + "0"
 			}
-		    fmt.Printf("16-bit fixed Point Rep: %s", binStr)
+			fmt.Printf("16-bit fixed Point Rep: %s", binStr)
 			// XVIPointRep, _ = strconv.ParseFloat(binStr, 64)
 			XVIPointRepStr = binStr
 			return XVIPointRepStr
 
 		} else if len(binStr) == I {
 			fractionalZeros := N - I
-			
+
 			XVIPointRepStr = binStr + "."
 			for i := 0; i < fractionalZeros; i++ {
 				XVIPointRepStr = XVIPointRepStr + "0"
@@ -49,60 +49,61 @@ func XVIfixedPointRep(bin float64) string {
 
 			return XVIPointRepStr
 		}
-      return XVIPointRepStr
+		return XVIPointRepStr
 	} else {
 		index := strings.Index(binStr, ".")
+		fmt.Println(index)
 		integerBits := binStr[:index]
-		//fmt.Printf("integerBits %s\n", integerBits)
-		fractionalBits := binStr[index +1:]
-		//fmt.Printf("fractionalBits %s\n", fractionalBits)
+		fmt.Printf("integerBits %s\n", integerBits)
+		fractionalBits := binStr[index+1:]
+		fmt.Printf("fractionalBits %s\n", fractionalBits)
 		if len(integerBits) < I {
 			zeros := I - len(integerBits)
 			for i := 0; i < zeros; i++ {
-				binStr = "0" + binStr
+				integerBits = "0" + integerBits
 			}
 			fractionalZeros := N - I - len(fractionalBits)
 			for k := 0; k < fractionalZeros; k++ {
-				binStr = binStr + "0"
+				fractionalBits = fractionalBits + "0"
 			}
-		
-			XVIPointRepStr = binStr
-			
-	    } else if len(integerBits) == I{
-			fractionalZeros := N - I - len(fractionalBits)
-			for k := 0; k < fractionalZeros; k++ {
-				binStr = binStr + "0"
-			}
-			XVIPointRepStr = binStr
 
-	} else{
-		fmt.Printf("Truncation error or Round-off error\n")
-		goodbye()
-		os.Exit(0)
+			XVIPointRepStr = integerBits + "." + fractionalBits
+
+		} else if len(integerBits) == I {
+			fractionalZeros := N - I - len(fractionalBits)
+			for k := 0; k < fractionalZeros; k++ {
+				fractionalBits = fractionalBits + "0"
+			}
+			XVIPointRepStr = integerBits + "." + fractionalBits
+
+		} else {
+			fmt.Printf("Truncation error or Round-off error\n")
+			goodbye()
+			os.Exit(0)
+		}
+		return XVIPointRepStr
 	}
 	return XVIPointRepStr
 }
-return XVIPointRepStr
-}
 
 func binaryCalculator(baseXNum string) (bin float64) {
-	//fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
+	fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
 	ratio := int(math.Log10(10) / math.Log10(2))
 
 	if !strings.Contains(baseXNum, ".") {
 		reps := len(baseXNum) * ratio //upper bound on operations needed
-	//	fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
+		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
 		for i := 0; i < reps+1; i++ {
-	//	numerator := n
+			numerator := n
 			if n == 0 {
 				break
 			}
 			remainder := n % 2
 			integerBit := strconv.Itoa(remainder)
 			n = n / 2
-	//	 fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
+			fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
 			s = append(s, integerBit)
 
 		}
@@ -122,17 +123,17 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var s []string
 		n, _ := strconv.Atoi(integerNum)
 		integerReps := len(integerNum) * ratio //upper bound on operations needed
-	//	fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
-	//	fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
-		for i := 0; i < integerReps; i++ {
-		//	numerator := n
+		fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
+		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
+		for i := 0; i < integerReps+1; i++ {
+			numerator := n
 			if n == 0 {
 				break
 			}
 			remainder := n % 2
 			integerBit := strconv.Itoa(remainder)
 			n = n / 2
-	//		fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
+			fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
 			s = append(s, integerBit)
 
 		}
@@ -145,19 +146,19 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var binIntStr string
 		binIntStr = strings.Join(reverseIntStr, "")
 		intBin, _ := strconv.ParseFloat(binIntStr, 64)
-	//	fmt.Printf("Integer Bits: %v\n\n", intBin)
+		fmt.Printf("Integer Bits: %v\n\n", intBin)
 
 		//"Converting factional part...\n\n"
 		fractionalNum := baseXNum[index+1:]
 		inputF64, _ := strconv.ParseFloat(baseXNum, 64)
 		integerNumF64, _ := strconv.ParseFloat(integerNum, 64)
 		fractionalPart := inputF64 - integerNumF64
-	//	fmt.Printf("STEP 2: Converting factional part: %v\n\n", fractionalPart)
+		fmt.Printf("STEP 2: Converting factional part: %v\n\n", fractionalPart)
 		var fractSlice []string
 		var m float64
 		for k := 0; k < len(fractionalNum); k++ {
 			m = fractionalPart * 2
-	//		fmt.Printf("%v * 2 = %v \n\n", fractionalPart, m)
+			fmt.Printf("%v * 2 = %v \n\n", fractionalPart, m)
 			if strings.HasPrefix(fmt.Sprintf("%f", fractionalPart*2), "1") {
 				fractSlice = append(fractSlice, "1")
 				fractionalPart = m - 1
@@ -168,7 +169,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 			}
 		}
 		fractionalBinStr := "0." + strings.Join(fractSlice, "")
-//		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
+		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
 	}
@@ -187,10 +188,10 @@ func enterNumber(reader *bufio.Reader) string {
 			continue
 		}
 		n = strings.TrimSuffix(n, "\n")
-		whitespaceExists := strings.HasSuffix(n , "")
-		//this is necessary since a byte[0xd] may be added to the input. 
-		//New lines behave differently across platforms 
-		if whitespaceExists{
+		whitespaceExists := strings.HasSuffix(n, "")
+		//this is necessary since a byte[0xd] may be added to the input.
+		//New lines behave differently across platforms
+		if whitespaceExists {
 			n = strings.TrimSpace(n)
 		}
 		if !isFloat64(n) {
