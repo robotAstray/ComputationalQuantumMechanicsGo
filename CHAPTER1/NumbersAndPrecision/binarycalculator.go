@@ -79,12 +79,16 @@ func binaryCalculator(baseXNum string) (bin float64) {
 
 		//"Converting fractional part...\n\n"
 		fractionalNum := baseXNum[index+1:]
+		//fmt.Printf("fractionalNum: %s\n", fractionalNum)
 		inputF64, _ := strconv.ParseFloat(baseXNum, 64)
+		//log.Printf("input conversion: %v\n", inputF64)
 		integerNumF64, _ := strconv.ParseFloat(integerNum, 64)
+		//log.Printf("integerPart conversion: %v\n", integerNumF64)
 		fractionalPart := inputF64 - integerNumF64
 		fmt.Printf("STEP 2: Converting fractional part: %v\n\n", fractionalPart)
 		var fractSlice []string
 		var m float64
+		//the following should be improved
 		for k := 0; k < len(fractionalNum); k++ {
 			m = fractionalPart * 2
 			fmt.Printf("%v * 2 = %v \n\n", fractionalPart, m)
