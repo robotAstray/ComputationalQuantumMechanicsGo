@@ -1,3 +1,7 @@
+//convExercises.go - base-2 to base-10 calculator and viceverse from commandline
+//USAGE: e.g. .\convExercises.exe -base10 23.625 -conv
+//Copyright (c) 2020 rndMemex
+
 package main
 
 import (
