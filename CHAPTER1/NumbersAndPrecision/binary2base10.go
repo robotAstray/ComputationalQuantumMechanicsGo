@@ -35,7 +35,6 @@ func baseIIConverter(bin string) (baseX float64) {
 		baseX = s
 		if sign == "negative" {
 			baseX = -baseX
-			// fmt.Printf("sign: %s and bin: %v", sign, bin)
 		}
 	} else {
 		index := strings.Index(bin, ".")
@@ -57,7 +56,6 @@ func baseIIConverter(bin string) (baseX float64) {
 		baseX = s + dSum
 		if sign == "negative" {
 			baseX = -baseX
-			// fmt.Printf("sign: %s and bin: %v", sign, bin)
 		}
 	}
 	return baseX
@@ -69,8 +67,6 @@ func isBin(n string) bool {
 	if sign == "negative" {
 		n = n[1:]
 	}
-	// log.Printf("Regular expression for isBin(): %s\n\n", reDot)
-	// log.Printf("input: %s and regex.MatchString(n): %v", n, reDot.MatchString(n))
 	if reDot.MatchString(n) {
 		return true
 	}
@@ -93,19 +89,14 @@ func isFloat64(input string) bool {
 func enterNumber(reader *bufio.Reader) string {
 	var bin string
 	reader = bufio.NewReader(os.Stdin)
-	// fmt.Println("-----------------------")
-	// fmt.Println("Command Shell")
-	// fmt.Println("-----------------------")
 	for {
 		fmt.Print("$ Enter a binary # (to exit press X): ")
 		n, err := reader.ReadString('\n')
-		//log.Printf("Debug n: %s\n\n", n)
 		if err != nil {
 			log.Print(err)
 			continue
 		}
 		n = strings.TrimSuffix(n, "\n")
-		//	log.Printf("Debug n : %s, after TrimSuffix(n)\n\n", n)
 		whitespaceExists := strings.HasSuffix(n, "")
 
 		//this is necessary since a byte[0xd] may be added to the input.
@@ -115,7 +106,6 @@ func enterNumber(reader *bufio.Reader) string {
 		}
 		if !isFloat64(n) {
 			exit := regexp.MustCompile(`(?i)^[X]+$`)
-			//		log.Printf("Regular expression to quit: %s", exit)
 			if exit.MatchString(n) {
 				goodbye()
 				os.Exit(0)
@@ -147,11 +137,7 @@ func main() {
 		baseX := baseIIConverter(bin)
 		fmt.Printf("The Binary number %s is %#v in base-10\n\n", bin, baseX)
 	}
-	// fmt.Printf("The Binary number %s is %#v in base-10\n", bin, baseX)
-	// goodbye()
-
 }
-
 func goodbye() {
 	fmt.Println("\nGoodbye!\n")
 	fmt.Println("Copyright(c) 2020 rndmemex@cantab.net\n")
