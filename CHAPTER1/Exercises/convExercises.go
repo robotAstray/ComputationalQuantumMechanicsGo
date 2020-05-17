@@ -212,6 +212,39 @@ func isBin(n string) bool {
 	return false
 }
 
-func manipulateInput(input *string) {
+/*
+--------------------------------------
+SAMPLE OUTPUT
+-------------------------------------
+.\convExercises.exe -base10 23.625 -conv
 
-}
+Converting 23.625 base-10 to binary representation..
+
+STEP 1: Converting integer part: 23
+
+Upper bound on No. of operations required ~ 2*log(10)/log(2) = 6
+
+Operation 1: 23/2=11 with remainder 1
+
+Operation 2: 11/2=5 with remainder 1
+
+Operation 3: 5/2=2 with remainder 1
+
+Operation 4: 2/2=1 with remainder 0
+
+Operation 5: 1/2=0 with remainder 1
+
+Integer Bits: 10111
+
+STEP 2: Converting fractional part: 0.625
+
+0.625 * 2 = 1.25
+
+0.25 * 2 = 0.5
+
+0.5 * 2 = 1
+
+Fractional Bits: 0.101
+
+The binary representation of 23.625 base-10 is 10111.101
+*/
