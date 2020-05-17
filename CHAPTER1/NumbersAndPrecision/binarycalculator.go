@@ -15,6 +15,8 @@ import (
 	"strings"
 )
 
+var sign string
+
 func binaryCalculator(baseXNum string) (bin float64) {
 	fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
 	ratio := int(math.Log10(10) / math.Log10(2))
@@ -45,6 +47,10 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var binStr string
 		binStr = strings.Join(reverseStr, "")
 		bin, _ := strconv.ParseFloat(binStr, 64)
+		if sign == "negative" {
+			bin = -bin
+			// fmt.Printf("sign: %s and bin: %v", sign, bin)
+		}
 		return bin
 	} else {
 		index := strings.Index(baseXNum, ".")
@@ -105,7 +111,12 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
+		if sign == "negative" {
+			bin = -bin
+			// fmt.Printf("sign: %s and bin: %v", sign, bin)
+		}
 	}
+
 	return bin
 }
 
@@ -138,6 +149,9 @@ func enterNumber(reader *bufio.Reader) string {
 			}
 		} else {
 			baseXNum = n
+			if sign == "negative" {
+				baseXNum = n[1:]
+			}
 		}
 		return baseXNum
 	}
@@ -147,6 +161,12 @@ func enterNumber(reader *bufio.Reader) string {
 /*isFloat64() checks if the string is a number*/
 func isFloat64(input string) bool {
 	_, err := strconv.ParseFloat(input, 64)
+	if strings.HasPrefix(input, "-") {
+		sign = "negative"
+	} else {
+		sign = "positive"
+	}
+	log.Printf("Sign: %s", sign)
 	return err == nil
 }
 

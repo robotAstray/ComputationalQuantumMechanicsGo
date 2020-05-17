@@ -14,6 +14,8 @@ import (
 	"strings"
 )
 
+var sign string
+
 func XVIfixedPointRep(bin float64) string {
 	binStr := fmt.Sprintf("%f", bin)
 	//	fmt.Printf("binStr %s\n", binStr)
@@ -37,6 +39,10 @@ func XVIfixedPointRep(bin float64) string {
 			fmt.Printf("16-bit fixed Point Rep: %s", binStr)
 			// XVIPointRep, _ = strconv.ParseFloat(binStr, 64)
 			XVIPointRepStr = binStr
+			if sign == "negative" {
+				XVIPointRepStr = "-" + XVIPointRepStr
+				// fmt.Printf("sign: %s and bin: %v", sign, bin)
+			}
 			return XVIPointRepStr
 
 		} else if len(binStr) == I {
@@ -46,17 +52,21 @@ func XVIfixedPointRep(bin float64) string {
 			for i := 0; i < fractionalZeros; i++ {
 				XVIPointRepStr = XVIPointRepStr + "0"
 			}
-
+			if sign == "negative" {
+				XVIPointRepStr = "-" + XVIPointRepStr
+				// fmt.Printf("sign: %s and bin: %v", sign, bin)
+			}
 			return XVIPointRepStr
 		}
+
 		return XVIPointRepStr
 	} else {
 		index := strings.Index(binStr, ".")
-		fmt.Println(index)
+		//	fmt.Println(index)
 		integerBits := binStr[:index]
-		fmt.Printf("integerBits %s\n", integerBits)
+		//fmt.Printf("integerBits %s\n", integerBits)
 		fractionalBits := binStr[index+1:]
-		fmt.Printf("fractionalBits %s\n", fractionalBits)
+		//	fmt.Printf("fractionalBits %s\n", fractionalBits)
 		if len(integerBits) < I {
 			zeros := I - len(integerBits)
 			for i := 0; i < zeros; i++ {
@@ -68,14 +78,20 @@ func XVIfixedPointRep(bin float64) string {
 			}
 
 			XVIPointRepStr = integerBits + "." + fractionalBits
-
+			if sign == "negative" {
+				XVIPointRepStr = "-" + XVIPointRepStr
+				// fmt.Printf("sign: %s and bin: %v", sign, bin)
+			}
 		} else if len(integerBits) == I {
 			fractionalZeros := N - I - len(fractionalBits)
 			for k := 0; k < fractionalZeros; k++ {
 				fractionalBits = fractionalBits + "0"
 			}
 			XVIPointRepStr = integerBits + "." + fractionalBits
-
+			if sign == "negative" {
+				XVIPointRepStr = "-" + XVIPointRepStr
+				// fmt.Printf("sign: %s and bin: %v", sign, bin)
+			}
 		} else {
 			fmt.Printf("Truncation error or Round-off error\n")
 			goodbye()
@@ -83,7 +99,6 @@ func XVIfixedPointRep(bin float64) string {
 		}
 		return XVIPointRepStr
 	}
-	return XVIPointRepStr
 }
 
 func binaryCalculator(baseXNum string) (bin float64) {
@@ -116,6 +131,10 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var binStr string
 		binStr = strings.Join(reverseStr, "")
 		bin, _ := strconv.ParseFloat(binStr, 64)
+		// if sign == "negative" {
+		// 	bin = -bin
+		// 	// fmt.Printf("sign: %s and bin: %v", sign, bin)
+		// }
 		return bin
 	} else {
 		index := strings.Index(baseXNum, ".")
@@ -175,6 +194,10 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
+		// if sign == "negative" {
+		// 	bin = -bin
+		// 	fmt.Printf("sign: %s and bin: %v", sign, bin)
+		// }
 	}
 	return bin
 }
@@ -208,15 +231,23 @@ func enterNumber(reader *bufio.Reader) string {
 			}
 		} else {
 			baseXNum = n
+			if sign == "negative" {
+				baseXNum = n[1:]
+			}
 		}
 		return baseXNum
 	}
-	return baseXNum
 }
 
 /*isFloat64() checks if the string is a number*/
 func isFloat64(input string) bool {
 	_, err := strconv.ParseFloat(input, 64)
+	if strings.HasPrefix(input, "-") {
+		sign = "negative"
+	} else {
+		sign = "positive"
+	}
+	log.Printf("Sign: %s", sign)
 	return err == nil
 }
 
@@ -228,7 +259,11 @@ func main() {
 	for {
 		baseX := enterNumber(inputNum)
 		bin := binaryCalculator(baseX)
-		fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
+		if sign == "negative" {
+			fmt.Printf("The binary representation of -%s base-10 is -%#v\n\n", baseX, bin)
+		} else {
+			fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
+		}
 		fmt.Printf("Converting to 16-bit fixed point representation...\n\n")
 		XVIFixPointRep := XVIfixedPointRep(bin)
 		fmt.Printf("The 16-bit fixed-point representation of %v is %#v\n\n", bin, XVIFixPointRep)

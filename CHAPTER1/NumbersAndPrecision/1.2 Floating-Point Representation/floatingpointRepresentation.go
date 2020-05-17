@@ -141,7 +141,7 @@ func enterNumber(reader *bufio.Reader) string {
 		}
 		n = strings.TrimSuffix(n, "\n")
 		whitespaceExists := strings.HasSuffix(n, "")
-		//this is necessary since a byte[0xd] may be added to the input.
+		//this is necessary since a byte[0xd] may be added to the input when running .exe files on windows.
 		//New lines behave differently across platforms
 		if whitespaceExists {
 			n = strings.TrimSpace(n)
@@ -160,7 +160,6 @@ func enterNumber(reader *bufio.Reader) string {
 		}
 		return baseXNum
 	}
-	return baseXNum
 }
 
 /*isFloat64() checks if the string is a number*/
