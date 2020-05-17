@@ -15,6 +15,8 @@ import (
 	"strings"
 )
 
+var sign string
+
 func floatingPointRep(bin float64) (floatingPointRepStr string) {
 	binStr := fmt.Sprintf("%f", bin)
 	index := strings.Index(binStr, ".")
@@ -27,10 +29,16 @@ func floatingPointRep(bin float64) (floatingPointRepStr string) {
 		for k := 0; k < zeros; k++ {
 			floatingPointRepStr = floatingPointRepStr + "0"
 		}
+		if sign == "negative" {
+			floatingPointRepStr = "-" + floatingPointRepStr
+		}
 		return floatingPointRepStr
 	} else {
 		power := len(intBits[1:])
-		floatingPointRepStr = intBits[:1] + "." + intBits[1:] + fractionalBits + "x 2^(" + strconv.Itoa(power) + ")"
+		floatingPointRepStr = intBits[:1] + "." + intBits[1:] + fractionalBits + " x 2^(" + strconv.Itoa(power) + ")"
+		if sign == "negative" {
+			floatingPointRepStr = "-" + floatingPointRepStr
+		}
 		return floatingPointRepStr
 	}
 }
@@ -41,7 +49,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 
 	if !strings.Contains(baseXNum, ".") {
 		reps := len(baseXNum) * ratio //upper bound on operations needed
-		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
+		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) \n\n", len(baseXNum))
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
 		for i := 0; i < reps+1; i++ {
@@ -121,7 +129,6 @@ func binaryCalculator(baseXNum string) (bin float64) {
 			}
 		}
 		fractionalBinStr := "0." + strings.Join(fractSlice, "")
-		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
 	}
@@ -157,6 +164,9 @@ func enterNumber(reader *bufio.Reader) string {
 			}
 		} else {
 			baseXNum = n
+			if sign == "negative" {
+				baseXNum = n[1:]
+			}
 		}
 		return baseXNum
 	}
@@ -165,13 +175,13 @@ func enterNumber(reader *bufio.Reader) string {
 /*isFloat64() checks if the string is a number*/
 func isFloat64(input string) bool {
 	_, err := strconv.ParseFloat(input, 64)
-	return err == nil
-}
-func isFloat64Negative(input string) bool {
 	if strings.HasPrefix(input, "-") {
-		return true
+		sign = "negative"
+	} else {
+		sign = "positive"
 	}
-	return false
+	log.Printf("Sign: %s", sign)
+	return err == nil
 }
 func main() {
 	var inputNum *bufio.Reader
@@ -181,8 +191,11 @@ func main() {
 	for {
 		baseX := enterNumber(inputNum)
 		bin := binaryCalculator(baseX)
-		fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
-		fmt.Printf("Converting to floating point representation...\n\n")
+		if sign == "negative" {
+			fmt.Printf("The binary representation of -%s base-10 is -%#v\n\n", baseX, bin)
+		} else {
+			fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
+		}
 		//always using 8 significant figures
 		VIIIFloatingPointRep := floatingPointRep(bin)
 		fmt.Printf("The floating-point representation of %v is %#v\n\n", bin, VIIIFloatingPointRep)
