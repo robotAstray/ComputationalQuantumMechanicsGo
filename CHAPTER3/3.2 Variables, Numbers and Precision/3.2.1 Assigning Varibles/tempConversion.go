@@ -18,9 +18,7 @@ var sign string
 func farnheitConversion(temp string) float64 {
 	//convert string to float
 	DegC, _ := strconv.ParseFloat(temp, 64)
-	fmt.Printf("DegC:%v", DegC)
 	DegF := DegC*(9.0/5.0) + 32
-	fmt.Println(DegF)
 	if sign == "negative" {
 		DegF = -DegF
 	}
