@@ -18,7 +18,6 @@ var sign string
 
 func XVIfixedPointRep(bin float64) string {
 	binStr := fmt.Sprintf("%f", bin)
-	//	fmt.Printf("binStr %s\n", binStr)
 	var XVIPointRepStr string
 	N := 16 //Total Number of bits
 	I := 4  //number of integer bits
@@ -37,11 +36,9 @@ func XVIfixedPointRep(bin float64) string {
 				binStr = binStr + "0"
 			}
 			fmt.Printf("16-bit fixed Point Rep: %s", binStr)
-			// XVIPointRep, _ = strconv.ParseFloat(binStr, 64)
 			XVIPointRepStr = binStr
 			if sign == "negative" {
 				XVIPointRepStr = "-" + XVIPointRepStr
-				// fmt.Printf("sign: %s and bin: %v", sign, bin)
 			}
 			return XVIPointRepStr
 
@@ -54,7 +51,6 @@ func XVIfixedPointRep(bin float64) string {
 			}
 			if sign == "negative" {
 				XVIPointRepStr = "-" + XVIPointRepStr
-				// fmt.Printf("sign: %s and bin: %v", sign, bin)
 			}
 			return XVIPointRepStr
 		}
@@ -62,11 +58,8 @@ func XVIfixedPointRep(bin float64) string {
 		return XVIPointRepStr
 	} else {
 		index := strings.Index(binStr, ".")
-		//	fmt.Println(index)
 		integerBits := binStr[:index]
-		//fmt.Printf("integerBits %s\n", integerBits)
 		fractionalBits := binStr[index+1:]
-		//	fmt.Printf("fractionalBits %s\n", fractionalBits)
 		if len(integerBits) < I {
 			zeros := I - len(integerBits)
 			for i := 0; i < zeros; i++ {
@@ -80,7 +73,6 @@ func XVIfixedPointRep(bin float64) string {
 			XVIPointRepStr = integerBits + "." + fractionalBits
 			if sign == "negative" {
 				XVIPointRepStr = "-" + XVIPointRepStr
-				// fmt.Printf("sign: %s and bin: %v", sign, bin)
 			}
 		} else if len(integerBits) == I {
 			fractionalZeros := N - I - len(fractionalBits)
@@ -90,7 +82,6 @@ func XVIfixedPointRep(bin float64) string {
 			XVIPointRepStr = integerBits + "." + fractionalBits
 			if sign == "negative" {
 				XVIPointRepStr = "-" + XVIPointRepStr
-				// fmt.Printf("sign: %s and bin: %v", sign, bin)
 			}
 		} else {
 			fmt.Printf("Truncation error or Round-off error\n")
@@ -131,10 +122,6 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		var binStr string
 		binStr = strings.Join(reverseStr, "")
 		bin, _ := strconv.ParseFloat(binStr, 64)
-		// if sign == "negative" {
-		// 	bin = -bin
-		// 	// fmt.Printf("sign: %s and bin: %v", sign, bin)
-		// }
 		return bin
 	} else {
 		index := strings.Index(baseXNum, ".")
@@ -184,20 +171,15 @@ func binaryCalculator(baseXNum string) (bin float64) {
 			if strings.HasPrefix(fmt.Sprintf("%f", fractionalPart*2), "1") {
 				fractSlice = append(fractSlice, "1")
 				fractionalPart = m - 1
-				//fmt.Printf("m = %v, so next fractional part = %v\n\n", m, fractionalPart)
 			} else if strings.HasPrefix(fmt.Sprintf("%f", fractionalPart*2), "0") {
 				fractSlice = append(fractSlice, "0")
 				fractionalPart = m
 			}
 		}
 		fractionalBinStr := "0." + strings.Join(fractSlice, "")
-		fmt.Printf("Fractional Bits: %s\n\n", fractionalBinStr)
 		fractionalBin, _ := strconv.ParseFloat(fractionalBinStr, 64)
 		bin = intBin + fractionalBin
-		// if sign == "negative" {
-		// 	bin = -bin
-		// 	fmt.Printf("sign: %s and bin: %v", sign, bin)
-		// }
+
 	}
 	return bin
 }
