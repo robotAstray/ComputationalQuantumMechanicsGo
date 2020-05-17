@@ -23,7 +23,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 
 	if !strings.Contains(baseXNum, ".") {
 		reps := len(baseXNum) * ratio //upper bound on operations needed
-		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(baseXNum), reps)
+		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2)\n\n", len(baseXNum))
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
 		for i := 0; i < reps+1; i++ {
@@ -49,7 +49,6 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		bin, _ := strconv.ParseFloat(binStr, 64)
 		if sign == "negative" {
 			bin = -bin
-			// fmt.Printf("sign: %s and bin: %v", sign, bin)
 		}
 		return bin
 	} else {
@@ -85,11 +84,8 @@ func binaryCalculator(baseXNum string) (bin float64) {
 
 		//"Converting fractional part...\n\n"
 		fractionalNum := baseXNum[index+1:]
-		//fmt.Printf("fractionalNum: %s\n", fractionalNum)
 		inputF64, _ := strconv.ParseFloat(baseXNum, 64)
-		//log.Printf("input conversion: %v\n", inputF64)
 		integerNumF64, _ := strconv.ParseFloat(integerNum, 64)
-		//log.Printf("integerPart conversion: %v\n", integerNumF64)
 		fractionalPart := inputF64 - integerNumF64
 		fmt.Printf("STEP 2: Converting fractional part: %v\n\n", fractionalPart)
 		var fractSlice []string
@@ -101,7 +97,6 @@ func binaryCalculator(baseXNum string) (bin float64) {
 			if strings.HasPrefix(fmt.Sprintf("%f", fractionalPart*2), "1") {
 				fractSlice = append(fractSlice, "1")
 				fractionalPart = m - 1
-				//fmt.Printf("m = %v, so next fractional part = %v\n\n", m, fractionalPart)
 			} else if strings.HasPrefix(fmt.Sprintf("%f", fractionalPart*2), "0") {
 				fractSlice = append(fractSlice, "0")
 				fractionalPart = m
@@ -113,7 +108,6 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		bin = intBin + fractionalBin
 		if sign == "negative" {
 			bin = -bin
-			// fmt.Printf("sign: %s and bin: %v", sign, bin)
 		}
 	}
 
@@ -155,7 +149,6 @@ func enterNumber(reader *bufio.Reader) string {
 		}
 		return baseXNum
 	}
-	return baseXNum
 }
 
 /*isFloat64() checks if the string is a number*/
@@ -166,7 +159,6 @@ func isFloat64(input string) bool {
 	} else {
 		sign = "positive"
 	}
-	log.Printf("Sign: %s", sign)
 	return err == nil
 }
 
@@ -178,7 +170,11 @@ func main() {
 	for {
 		baseX := enterNumber(inputNum)
 		bin := binaryCalculator(baseX)
-		fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
+		if sign == "negative" {
+			fmt.Printf("The binary representation of -%s base-10 is -%#v\n\n", baseX, bin)
+		} else {
+			fmt.Printf("The binary representation of %s base-10 is %#v\n\n", baseX, bin)
+		}
 	}
 
 }
