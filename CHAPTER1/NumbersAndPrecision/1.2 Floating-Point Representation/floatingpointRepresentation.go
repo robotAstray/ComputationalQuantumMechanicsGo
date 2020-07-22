@@ -1,6 +1,6 @@
 //floatingpointRepresentation.go - base-10 to base-2 calculator to floating point representation
 //Usage: go build floatingpointRepresentation.go; ./floatingpointRepresentation
-//Copyright (c) 2020 rndMemex
+//Copyright (c) 2020 rndMemex@protonmail.com
 
 package main
 
