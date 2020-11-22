@@ -33,7 +33,7 @@ func enterNumber(reader *bufio.Reader) string {
 	var num string
 	reader = bufio.NewReader(os.Stdin)
 	for {
-		fmt.Print("$ Enter temperature in Celsius (to exit press X): ")
+		fmt.Print("$ Enter a number (to exit press X): ")
 		n, err := reader.ReadString('\n')
 		if err != nil {
 			log.Print(err)
