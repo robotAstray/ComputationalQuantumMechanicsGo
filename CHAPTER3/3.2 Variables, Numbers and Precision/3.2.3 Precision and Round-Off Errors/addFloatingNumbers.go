@@ -35,6 +35,8 @@ func main() {
 		commaSpaceExists := strings.Contains(n, ", ")
 		//correspond to carriage return
 		carriageReturnExists := strings.HasSuffix(n, "\r")
+		var numFloatArray []float64
+		var sum float64
 		if commaExists {
 			log.Printf("`,-?[0-9]+`:%v\n", commaExists)
 			log.Printf("carriageReturnExists:%v\n", carriageReturnExists)
@@ -43,7 +45,7 @@ func main() {
 			if carriageReturnExists {
 				n = n[:len(n)-1]
 			}
-			var numFloatArray []float64
+
 			numArray := strings.Split(n, ",")
 			for i := 0; i < len(numArray); i++ {
 				numStr := strings.TrimPrefix(strings.TrimSuffix(numArray[i], " "), " ")
@@ -57,6 +59,10 @@ func main() {
 			// log.Printf("Length of input array: %d", len(numArray))
 			// log.Printf("Length of last input: %#v", len(numArray[1]))
 			// log.Printf("Array of float64:%v", numFloatArray)
+			for j := 0; j < len(numFloatArray); j++ {
+				sum += numFloatArray[j]
+			}
+			fmt.Printf("Sum: %.12f\n", sum)
 		} else if commaSpaceExists {
 			fmt.Printf("carriageReturnExists:%v", carriageReturnExists)
 			//this is necessary since a byte[0xd] may be added to the input.
@@ -64,7 +70,6 @@ func main() {
 			if carriageReturnExists {
 				n = n[:len(n)-1]
 			}
-			var numFloatArray []float64
 			numArray := strings.Split(n, ", ")
 			for i := 0; i < len(numArray); i++ {
 				numStr := strings.TrimPrefix(strings.TrimSuffix(numArray[i], " "), " ")
@@ -73,13 +78,15 @@ func main() {
 					fmt.Print(err)
 				}
 				numFloatArray = append(numFloatArray, nF)
-
+			}
+			for j := 0; j < len(numFloatArray); j++ {
+				sum += numFloatArray[j]
 			}
 			// log.Printf("array input: %#v", numArray)
 			// log.Printf("Length of input array: %d", len(numArray))
 			// log.Printf("Length of last input: %#v", len(numArray[1]))
 			// log.Printf("Array of float64:%v", numFloatArray)
-
+			fmt.Printf("Sum: %.12f\n", sum)
 		} else {
 			if carriageReturnExists {
 				n = n[:len(n)-1]
