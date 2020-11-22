@@ -84,5 +84,4 @@ func main() {
 	numStr := enterNumber(inputNumber)
 	floatConv, strConv := addXXIAndConvertBackToStr(numStr)
 	fmt.Printf("Output: %#v, %v, %#v\n\n", numStr, floatConv, strConv)
-
 }
