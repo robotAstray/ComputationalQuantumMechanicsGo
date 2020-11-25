@@ -1,3 +1,6 @@
+//addFloatingNumbers.go
+//Usage: go build addFloatingNumbers.go; ./addFloatingNumbers
+//Copyright (c) 2020 rndMemex
 package main
 
 import (
@@ -13,6 +16,7 @@ import (
 var version = "0.1"
 
 const exit = "X"
+const lengthLimit = 2
 
 func main() {
 	fmt.Println("-----------------------")
@@ -38,8 +42,8 @@ func main() {
 		var numFloatArray []float64
 		var sum float64
 		if commaExists {
-			log.Printf("`,-?[0-9]+`:%v\n", commaExists)
-			log.Printf("carriageReturnExists:%v\n", carriageReturnExists)
+			//	log.Printf("`,-?[0-9]+`:%v\n", commaExists)
+			//	log.Printf("carriageReturnExists:%v\n", carriageReturnExists)
 			//this is necessary since a byte[0xd] may be added to the input.
 			//New lines behave differently across platforms
 			if carriageReturnExists {
@@ -47,6 +51,12 @@ func main() {
 			}
 
 			numArray := strings.Split(n, ",")
+			limitExcided := limitReached(numArray, lengthLimit)
+			if limitExcided || len(numArray) == 1 {
+				fmt.Printf("You have entered %v numbers, please start again and follow the instructions\n", len(numArray))
+				goodbye()
+				break
+			}
 			for i := 0; i < len(numArray); i++ {
 				numStr := strings.TrimPrefix(strings.TrimSuffix(numArray[i], " "), " ")
 				nF, err := strconv.ParseFloat(numStr, 64) //number float
@@ -55,6 +65,7 @@ func main() {
 				}
 				numFloatArray = append(numFloatArray, nF)
 			}
+
 			// log.Printf("array input: %#v", numArray)
 			// log.Printf("Length of input array: %d", len(numArray))
 			// log.Printf("Length of last input: %#v", len(numArray[1]))
@@ -64,13 +75,19 @@ func main() {
 			}
 			fmt.Printf("Sum: %.12f\n", sum)
 		} else if commaSpaceExists {
-			fmt.Printf("carriageReturnExists:%v", carriageReturnExists)
+			fmt.Printf("carriageReturnExists:%v\n", carriageReturnExists)
 			//this is necessary since a byte[0xd] may be added to the input.
 			//New lines behave differently across platforms
 			if carriageReturnExists {
 				n = n[:len(n)-1]
 			}
 			numArray := strings.Split(n, ", ")
+			limitExcided := limitReached(numArray, lengthLimit)
+			if limitExcided || len(numArray) == 1 {
+				fmt.Printf("You have entered %v numbers, please start again and follow the instructions\n", len(numArray))
+				goodbye()
+				break
+			}
 			for i := 0; i < len(numArray); i++ {
 				numStr := strings.TrimPrefix(strings.TrimSuffix(numArray[i], " "), " ")
 				nF, err := strconv.ParseFloat(numStr, 64) //number float
@@ -105,4 +122,12 @@ func main() {
 func goodbye() {
 	fmt.Printf("\nGoodbye!\n")
 	fmt.Printf("Copyright(c) 2020 rndmemex@cantab.net\n")
+}
+
+func limitReached(n []string, limit int) (limitReach bool) {
+	limitReach = false
+	if len(n) > limit {
+		limitReach = true
+	}
+	return limitReach
 }
