@@ -1,4 +1,4 @@
-//squares.go - squares over runes
+//squares.go - print all squares numbers between 10 and 60
 //Usage: go build squares.go; ./squares
 //Copyright (c) 2020 rndMemex
 
