@@ -17,7 +17,6 @@ func main() {
 		}
 		log.Println(square)
 	}
-
 }
 
 func goodbye() {
