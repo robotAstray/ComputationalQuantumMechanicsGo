@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	var interval = []int{5, 11}
+	var interval = []int{5, 10}
 	for i := interval[0]; i <= interval[1]; i++ {
 		fmt.Println(i * i)
 	}
