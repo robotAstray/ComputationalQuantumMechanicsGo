@@ -32,7 +32,6 @@ func main() {
 			log.Print(err)
 			continue
 		}
-
 		//if user provide number separeted by a comma
 		n = strings.TrimSuffix(n, "\n")
 		reComma := regexp.MustCompile(`,-?[0-9]+`)
@@ -42,8 +41,6 @@ func main() {
 		carriageReturnExists := strings.HasSuffix(n, "\r")
 		var numFloatArray []float64
 		if commaExists {
-			//	log.Printf("`,-?[0-9]+`:%v\n", commaExists)
-			//	log.Printf("carriageReturnExists:%v\n", carriageReturnExists)
 			//this is necessary since a byte[0xd] may be added to the input.
 			//New lines behave differently across platforms
 			if carriageReturnExists {
@@ -65,11 +62,6 @@ func main() {
 				}
 				numFloatArray = append(numFloatArray, nF)
 			}
-
-			// log.Printf("array input: %#v", numArray)
-			// log.Printf("Length of input array: %d", len(numArray))
-			// log.Printf("Length of last input: %#v", len(numArray[1]))
-			// log.Printf("Array of float64:%v", numFloatArray)
 			//find the smallest of the three numbers
 			a := numFloatArray[0]
 			b := numFloatArray[1]
@@ -83,7 +75,7 @@ func main() {
 				smallest = c
 			}
 
-			fmt.Printf("Smallest fo three numbers: %v\n", smallest)
+			fmt.Printf("Smallest of three numbers: %v\n", smallest)
 		} else if commaSpaceExists {
 			fmt.Printf("carriageReturnExists:%v\n", carriageReturnExists)
 			//this is necessary since a byte[0xd] may be added to the input.
@@ -122,7 +114,7 @@ func main() {
 			// log.Printf("Length of input array: %d", len(numArray))
 			// log.Printf("Length of last input: %#v", len(numArray[1]))
 			// log.Printf("Array of float64:%v", numFloatArray)
-			fmt.Printf("Smallest fo three numbers: %v\n", smallest)
+			fmt.Printf("Smallest of three numbers: %v\n", smallest)
 		} else {
 			if carriageReturnExists {
 				n = n[:len(n)-1]
