@@ -5,7 +5,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 )
 
 func main() {
@@ -14,4 +16,11 @@ func main() {
 		log.Printf("%#U, at position %d\n", s[i], i)
 
 	}
+	goodbye()
+}
+
+func goodbye() {
+	fmt.Printf("\nGoodbye!\n")
+	fmt.Printf("Copyright(c) 2020 rndmemex@cantab.net\n")
+	os.Exit(0)
 }

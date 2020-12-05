@@ -1,4 +1,4 @@
-//ifStatements.go.go Find the smallest of three real numbers a, b, c
+//ifStatements.go Find the smallest of three real numbers a, b, c
 //Usage: go build ifStatements.go; ./ifStatements
 //Copyright (c) 2020 rndMemex
 
