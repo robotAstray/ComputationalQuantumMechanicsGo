@@ -1,6 +1,6 @@
 //squares.go
 //Printing out all squares numbers less than 60
-
+//Copyright (c) 2020 rndMemex
 package main
 
 import (
