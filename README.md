@@ -3,4 +3,4 @@ Exercises from "Computational Quantum Mechanics" by Joshua Izaac &amp; Jingbo Wa
 
 **Note**, majority of the code I have written describes/corresponds to the content of the book. My solutions to exercises from the book have filename starting with `Ex`.
 
-Copyright(c) 2020 rndmemex@cantab.net
+Copyright(c) 2020 robotastray@cantab.net
