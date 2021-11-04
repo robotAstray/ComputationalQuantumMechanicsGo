@@ -18,10 +18,11 @@ var sign string
 func farnheitConversion(temp string) float64 {
 	//convert string to float
 	DegC, _ := strconv.ParseFloat(temp, 64)
-	DegF := DegC*(9.0/5.0) + 32
 	if sign == "negative" {
-		DegF = -DegF
+		DegC = -DegC
 	}
+	DegF := DegC*(9.0/5.0) + 32
+
 	return DegF
 }
 
@@ -48,14 +49,17 @@ func enterTemperature(reader *bufio.Reader) string {
 			if exit.MatchString(n) {
 				goodbye()
 				os.Exit(0)
-			} else {
-				fmt.Printf("ERROR!! %s is not a number!\n\n", n)
-				continue
 			}
+			// } else {
+			fmt.Printf("ERROR!! %s is not a number!\n\n", n)
+			continue
+			//}
 		} else {
 			temp = n
 			if sign == "negative" {
 				temp = n[1:]
+
+				log.Printf("Negative number is %s\n", temp)
 			}
 		}
 		return temp
@@ -87,9 +91,9 @@ func main() {
 		tempCelsius := enterTemperature(inputTemp)
 		tempFarenheit := farnheitConversion(tempCelsius)
 		if sign == "negative" {
-			fmt.Printf("-%s Celsius is equals to %v Farenheit\n\n", tempCelsius, tempFarenheit)
+			fmt.Printf("-%s Celsius is equals to %v Fahrenheit\n\n", tempCelsius, tempFarenheit)
 		} else {
-			fmt.Printf("%s Celsius is equals to %v Farenheit\n\n", tempCelsius, tempFarenheit)
+			fmt.Printf("%s Celsius is equals to %v Fahrenheit\n\n", tempCelsius, tempFarenheit)
 		}
 	}
 }
