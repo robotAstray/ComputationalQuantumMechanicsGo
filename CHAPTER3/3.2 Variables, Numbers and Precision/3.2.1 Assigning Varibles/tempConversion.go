@@ -1,6 +1,7 @@
 //tempConversion.go - Celsius to Fahrenheit calculator
-//Usage: go build tempConversion.go; ./tempconversion
-//Copyright (c) 2020 robotAstray
+//Usage: go build tempConversion.go; ./tempConversion
+//Copyright (c) robotAstray
+
 package main
 
 import (
@@ -14,10 +15,10 @@ import (
 	"strings"
 )
 
-var sign string
+var sign string //global variable
 
-func fahrnheitConv(temp string) float64 {
-	//convert string to float
+func fahrenheit(temp string) float64 {
+	//convert string to float64
 	DegC, _ := strconv.ParseFloat(temp, 64)
 	if sign == "negative" {
 		DegC = -DegC
@@ -39,8 +40,8 @@ func enterTemp(reader *bufio.Reader) string {
 		n = strings.TrimSuffix(n, "\n")
 		whitespaceExists := strings.HasSuffix(n, "")
 
-		//this is necessary since a byte[0xd] may be added to the input.
-		//New lines behave differently across platforms
+		//the following is necessary since a byte[0xd] may be added to the input.
+		//New lines behave differently across platforms.
 		if whitespaceExists {
 			n = strings.TrimSpace(n)
 		}
@@ -50,15 +51,13 @@ func enterTemp(reader *bufio.Reader) string {
 				robotAstray.Goodbye()
 				os.Exit(0)
 			}
-			fmt.Printf("ERROR!! %s is not a number!\n\n", n)
+			fmt.Printf("ERROR!! %s is  not a number!\n\n", n)
 			continue
-		} else {
-			temp = n
-			if sign == "negative" {
-				temp = n[1:]
-
-				log.Printf("Negative number is %s\n", temp)
-			}
+		}
+		temp = n
+		if sign == "negative" {
+			temp = n[1:]
+			log.Printf("-%s is a negative number\n", temp)
 		}
 		return temp
 	}
@@ -70,7 +69,7 @@ func isFloat64(input string) bool {
 	if strings.HasPrefix(input, "-") {
 		sign = "negative"
 	}
-	log.Printf("Sign: %s", sign)
+	// log.Printf("Sign: %s", sign)
 	return err == nil
 }
 
@@ -81,11 +80,11 @@ func main() {
 	fmt.Println("-----------------------")
 	for {
 		tempCelsius := enterTemp(inputTemp)
-		tempFarenheit := fahrnheitConv(tempCelsius)
+		tempFahrenheit := fahrenheit(tempCelsius)
 		if sign == "negative" {
-			fmt.Printf("-%s Celsius is equals to %v Fahrenheit\n\n", tempCelsius, tempFarenheit)
+			fmt.Printf("-%s Celsius is equal to %v Fahrenheit\n\n", tempCelsius, tempFahrenheit)
 		} else {
-			fmt.Printf("%s Celsius is equals to %v Fahrenheit\n\n", tempCelsius, tempFarenheit)
+			fmt.Printf("%s Celsius is equal to %v Fahrenheit\n\n", tempCelsius, tempFahrenheit)
 		}
 	}
 }
