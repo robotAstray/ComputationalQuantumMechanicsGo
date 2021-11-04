@@ -1,4 +1,4 @@
-//tempConversion.go - Celsius to Farnheit calculator
+//tempConversion.go - Celsius to Fahrenheit calculator
 //Usage: go build tempConversion.go; ./tempconversion
 //Copyright (c) 2020 robotAstray
 package main
