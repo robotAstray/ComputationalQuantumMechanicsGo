@@ -1,6 +1,6 @@
 //tempConversion.go - Celsius to Farnheit calculator
 //Usage: go build tempConversion.go; ./tempconversion
-//Copyright (c) 2020 rndMemex
+//Copyright (c) 2020 robotAstray
 package main
 
 import (
@@ -9,24 +9,24 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"robotAstray"
 	"strconv"
 	"strings"
 )
 
 var sign string
 
-func farnheitConversion(temp string) float64 {
+func fahrnheitConv(temp string) float64 {
 	//convert string to float
 	DegC, _ := strconv.ParseFloat(temp, 64)
 	if sign == "negative" {
 		DegC = -DegC
 	}
 	DegF := DegC*(9.0/5.0) + 32
-
 	return DegF
 }
 
-func enterTemperature(reader *bufio.Reader) string {
+func enterTemp(reader *bufio.Reader) string {
 	var temp string
 	reader = bufio.NewReader(os.Stdin)
 	for {
@@ -47,13 +47,11 @@ func enterTemperature(reader *bufio.Reader) string {
 		if !isFloat64(n) {
 			exit := regexp.MustCompile(`(?i)^[X]+$`)
 			if exit.MatchString(n) {
-				goodbye()
+				robotAstray.Goodbye()
 				os.Exit(0)
 			}
-			// } else {
 			fmt.Printf("ERROR!! %s is not a number!\n\n", n)
 			continue
-			//}
 		} else {
 			temp = n
 			if sign == "negative" {
@@ -68,18 +66,12 @@ func enterTemperature(reader *bufio.Reader) string {
 
 func isFloat64(input string) bool {
 	_, err := strconv.ParseFloat(input, 64)
+	sign = "positive"
 	if strings.HasPrefix(input, "-") {
 		sign = "negative"
-	} else {
-		sign = "positive"
 	}
 	log.Printf("Sign: %s", sign)
 	return err == nil
-}
-
-func goodbye() {
-	fmt.Printf("\nGoodbye!\n")
-	fmt.Printf("Copyright(c) 2020 rndmemex@cantab.net\n")
 }
 
 func main() {
@@ -88,8 +80,8 @@ func main() {
 	fmt.Println("Command Shell")
 	fmt.Println("-----------------------")
 	for {
-		tempCelsius := enterTemperature(inputTemp)
-		tempFarenheit := farnheitConversion(tempCelsius)
+		tempCelsius := enterTemp(inputTemp)
+		tempFarenheit := fahrnheitConv(tempCelsius)
 		if sign == "negative" {
 			fmt.Printf("-%s Celsius is equals to %v Fahrenheit\n\n", tempCelsius, tempFarenheit)
 		} else {
