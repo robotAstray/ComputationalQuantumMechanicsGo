@@ -13,6 +13,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	// "time"
 )
 
 var version = "0.0"
@@ -123,7 +124,6 @@ func enterNumber(reader *bufio.Reader) string {
 			return bin
 		}
 	}
-	return bin
 }
 
 func main() {
@@ -139,7 +139,7 @@ func main() {
 }
 func goodbye() {
 	fmt.Println("\nGoodbye!\n")
-	fmt.Println("Copyright(c) 2020 rndmemex@cantab.net\n")
+	fmt.Println("Copyright(c) 2020 robotastray@cantab.net\n")
 }
 
 /*Sample Output of base-2 to base-10 calculator

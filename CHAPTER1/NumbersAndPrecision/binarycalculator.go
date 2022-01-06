@@ -13,10 +13,12 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var sign string
 
+/*binaryCalculator() computes the binary representation from base10*/
 func binaryCalculator(baseXNum string) (bin float64) {
 	fmt.Printf("\nConverting %s base-10 to binary representation..\n\n", baseXNum)
 	ratio := int(math.Log10(10) / math.Log10(2))
@@ -24,6 +26,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 	if !strings.Contains(baseXNum, ".") {
 		reps := len(baseXNum) * ratio //upper bound on operations needed
 		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2)\n\n", len(baseXNum))
+		time.Sleep(2*time.Second)
 		var s []string
 		n, _ := strconv.Atoi(baseXNum)
 		for i := 0; i < reps+1; i++ {
@@ -35,6 +38,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 			integerBit := strconv.Itoa(remainder)
 			n = n / 2
 			fmt.Printf("Operation %d: %d/2=%d with remainder %d\n\n", i+1, numerator, n, remainder)
+			time.Sleep(2*time.Second)
 			s = append(s, integerBit)
 
 		}
@@ -58,6 +62,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		n, _ := strconv.Atoi(integerNum)
 		integerReps := len(integerNum) * ratio //upper bound on operations needed
 		fmt.Printf("STEP 1: Converting integer part: %s\n\n", integerNum)
+		time.Sleep(2*time.Second)
 		fmt.Printf("Upper bound on No. of operations required ~ %d*log(10)/log(2) = %d\n\n", len(integerNum), integerReps)
 		for i := 0; i < integerReps+1; i++ {
 			numerator := n
@@ -88,6 +93,7 @@ func binaryCalculator(baseXNum string) (bin float64) {
 		integerNumF64, _ := strconv.ParseFloat(integerNum, 64)
 		fractionalPart := inputF64 - integerNumF64
 		fmt.Printf("STEP 2: Converting fractional part: %v\n\n", fractionalPart)
+		time.Sleep(2*time.Second)
 		var fractSlice []string
 		var m float64
 		//the following should be improved
@@ -181,7 +187,7 @@ func main() {
 
 func goodbye() {
 	fmt.Printf("\nGoodbye!\n")
-	fmt.Printf("Copyright(c) 2020 rndmemex@cantab.net\n")
+	fmt.Printf("Copyright(c) 2020 robotastray@cantab.net\n")
 }
 
 /* Sample Output for input = 23
