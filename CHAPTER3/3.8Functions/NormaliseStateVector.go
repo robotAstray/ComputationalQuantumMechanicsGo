@@ -6,7 +6,8 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"math"
+	Quantum "github.com/robotAstray/ComputationalQuantumMechanicsGo/src/robotastray/QUANTUM"
+	robotAstray "github.com/robotAstray/ComputationalQuantumMechanicsGo/src/robotastray/GREETINGS"
 )
 
 
@@ -23,6 +24,7 @@ func main(){
 	for _, reqFlag := range requiredFlags{
 		if !seenFlag[reqFlag]{
 			log.Printf("ERROR!Missing mandatory flag:%s", reqFlag)
+			robotAstray.Goodbye()
 			os.Exit(1)
 		}
 	}
@@ -31,42 +33,19 @@ func main(){
 		real, err := strconv.ParseFloat(*realStr, 64)
 		if err != nil{
 			fmt.Println("This is not a number! Start Again")
-			goodbye()
+			robotAstray.Goodbye()
 			os.Exit(1)
 		}
 		imaginary, err := strconv.ParseFloat(*imagStr, 64)
 		if err != nil{
 			fmt.Println("This is not a number! Start Again")
-			goodbye()
+			robotAstray.Goodbye()
 			os.Exit(1)
 		}
 		psi := complex(real,imaginary)
 
-		normalisedPsi := NormaliseStateVector(psi)
+		normalisedPsi := Quantum.NormaliseStateVector(psi)
 		fmt.Printf("Normilesed Wave Function: %#v\n", normalisedPsi)
 	}
 }
 
-func goodbye(){
-	fmt.Printf("\nGoodbye\n")
-	fmt.Printf("Copyright (c) 2022 RobotAstray\n")
-}
-
-
-func NormaliseStateVector(psi complex128) (normalisedPsi complex128){
-	re := real(psi) //real part
-	im := imag(psi) //imaginary part 
-	var waveComponents = []float64{re, im}
-    var sumAbsComponent float64
-	for _, component := range waveComponents{
-		sumAbsComponent += math.Pow(math.Abs(component),2)
-	}
-	var N float64
- 	N = math.Sqrt(sumAbsComponent)
-	fmt.Println(N)
-	re = real(psi)/N
-	im = imag(psi)/N
-	normalisedPsi = complex(re,im)
-
-	return normalisedPsi
-}
