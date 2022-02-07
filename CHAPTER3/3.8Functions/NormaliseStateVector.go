@@ -10,26 +10,25 @@ import (
 	robotAstray "github.com/robotAstray/ComputationalQuantumMechanicsGo/src/robotastray/GREETINGS"
 )
 
-
 func main(){
-	//define flags 
+	//declare flags
 	realStr := flag.String("real", "", "real part")
 	imagStr := flag.String("img", "", "imaginary part, enter just a number without i or j")
 	flag.Parse()
 	requiredFlags := []string{"real", "img"}
-	seenFlag :=make(map[string]bool)
-	flag.Visit(func (f *flag.Flag){
+	seenFlag := make(map[string]bool)
+    flag.Visit(func (f *flag.Flag){
 		seenFlag[f.Name] = true
 	})
 	for _, reqFlag := range requiredFlags{
 		if !seenFlag[reqFlag]{
-			log.Printf("ERROR!Missing mandatory flag:%s", reqFlag)
+			log.Printf("ERROR!!Missing mandatory flag: %s", reqFlag)
 			robotAstray.Goodbye()
 			os.Exit(1)
 		}
 	}
 	if *realStr != "" && *imagStr != ""{
-		//convert between string to float64
+		//convert from string to float64
 		real, err := strconv.ParseFloat(*realStr, 64)
 		if err != nil{
 			fmt.Println("This is not a number! Start Again")
@@ -42,10 +41,10 @@ func main(){
 			robotAstray.Goodbye()
 			os.Exit(1)
 		}
-		psi := complex(real,imaginary)
+		psi := complex(real, imaginary)
 
 		normalisedPsi := Quantum.NormaliseStateVector(psi)
-		fmt.Printf("Normilesed Wave Function: %#v\n", normalisedPsi)
+		fmt.Printf("Normalised Wave Function: %#v\n", normalisedPsi)
 	}
 }
 
