@@ -6,5 +6,5 @@ import "fmt"
 
 func Goodbye() {
 	fmt.Printf("\nGoodbye\n")
-	fmt.Printf("Copyright (c) 2021 RobotAstray\n")
+	fmt.Printf("Copyright (c) 2022 RobotAstray\n")
 }

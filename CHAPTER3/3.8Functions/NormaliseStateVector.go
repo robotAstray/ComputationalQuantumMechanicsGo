@@ -44,7 +44,7 @@ func main(){
 		psi := complex(real, imaginary)
 
 		normalisedPsi := Quantum.NormaliseStateVector(psi)
-		fmt.Printf("Normalised Wave Function: %#v\n", normalisedPsi)
+		fmt.Printf("Normalised State Vector: %#v\n", normalisedPsi)
 	}
 }
 
